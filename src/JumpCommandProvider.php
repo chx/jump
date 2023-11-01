@@ -11,5 +11,4 @@ class JumpCommandProvider implements CommandProvider
     {
         return [new JumpCommand()];
     }
-
 }

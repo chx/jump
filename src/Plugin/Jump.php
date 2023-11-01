@@ -30,5 +30,4 @@ class Jump implements PluginInterface, Capable
         CommandProvider::class => JumpCommandProvider::class,
         ];
     }
-
 }

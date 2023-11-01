@@ -24,8 +24,8 @@ class JumpCommand extends BaseCommand
             'command' => 'show',
             '--latest' => true,
             '--major-only' => true,
-        '--direct' => true,
-        '--format' => 'json'
+            '--direct' => true,
+            '--format' => 'json'
         ];
         $input = new ArrayInput($args);
         $output = new BufferedOutput();
@@ -35,6 +35,4 @@ class JumpCommand extends BaseCommand
         $this->getIO()->write($output->fetch());
         return 0;
     }
-
-
 }
