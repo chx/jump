@@ -1,0 +1,26 @@
+{
+    "name": "chx/jump",
+    "description": "Sets root requirements to the latest available version",
+    "type": "composer-plugin",
+    "require": {
+        "composer-plugin-api": "^2.0"
+    },
+    "require-dev": {
+        "composer/composer": "^2.6"
+    },
+    "license": "GPL-2.0-or-later",
+    "authors": [
+        {
+            "name": "Karoly Negyesi",
+            "email": "chx1975@gmail.com"
+        }
+    ],
+    "extra": {
+        "class": "chx\\Composer\\Plugin\\Jump"
+    },
+    "autoload": {
+        "psr-4": {
+            "chx\\Composer\\": "src"
+        }
+    }
+}
