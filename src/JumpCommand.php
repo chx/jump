@@ -25,11 +25,10 @@ class JumpCommand extends BaseCommand
             '--latest' => true,
             '--major-only' => true,
             '--direct' => true,
-            '--format' => 'json'
+            '--format' => 'json',
         ];
-        $showInput = new ArrayInput($args);
         $showOutput = new BufferedOutput();
-        $this->getApplication()->doRun($showInput, $showOutput);
+        $this->getApplication()->doRun(new ArrayInput($args), $showOutput);
         $packages = [];
         foreach (json_decode($showOutput->fetch(), TRUE)['installed'] as $package) {
             if ($package['latest-status'] === 'update-possible') {
@@ -41,7 +40,7 @@ class JumpCommand extends BaseCommand
             $args = [
                 'command' => 'require',
                 'packages' => $packages,
-                '--no-update' => TRUE
+                '--no-update' => TRUE,
             ];
             $this->getApplication()->run(new ArrayInput($args), $output);
         }
