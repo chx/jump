@@ -27,12 +27,24 @@ class JumpCommand extends BaseCommand
             '--direct' => true,
             '--format' => 'json'
         ];
-        $input = new ArrayInput($args);
-        $output = new BufferedOutput();
-        $app = $this->getApplication();
-        $app->setAutoExit(false);
-        $app->run($input, $output);
-        $this->getIO()->write($output->fetch());
+        $showInput = new ArrayInput($args);
+        $showOutput = new BufferedOutput();
+        $this->getApplication()->doRun($showInput, $showOutput);
+        $packages = [];
+        foreach (json_decode($showOutput->fetch(), TRUE)['installed'] as $package) {
+            if ($package['latest-status'] === 'update-possible') {
+                $packages[] = $package['name'] . ':~' . $package['latest'];
+            }
+        }
+        if ($packages)
+        {
+            $args = [
+                'command' => 'require',
+                'packages' => $packages,
+                '--no-update' => TRUE
+            ];
+            $this->getApplication()->run(new ArrayInput($args), $output);
+        }
         return 0;
     }
 }
