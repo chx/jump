@@ -29,9 +29,11 @@ class JumpCommand extends BaseCommand
         ];
         $input = new ArrayInput($args);
         $output = new BufferedOutput();
-        $this->getApplication()->run($input, $output);
+        $app = $this->getApplication();
+        $app->setAutoExit(false);
+        $app->run($input, $output);
         $this->getIO()->write($output->fetch());
-
+        return 0;
     }
 
 
