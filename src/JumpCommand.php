@@ -30,17 +30,16 @@ class JumpCommand extends BaseCommand
         $showOutput = new BufferedOutput();
         $this->getApplication()->doRun(new ArrayInput($args), $showOutput);
         $packages = [];
-        foreach (json_decode($showOutput->fetch(), TRUE)['installed'] as $package) {
+        foreach (json_decode($showOutput->fetch(), true)['installed'] as $package) {
             if ($package['latest-status'] === 'update-possible') {
                 $packages[] = $package['name'] . ':~' . $package['latest'];
             }
         }
-        if ($packages)
-        {
+        if ($packages) {
             $args = [
                 'command' => 'require',
                 'packages' => $packages,
-                '--no-update' => TRUE,
+                '--no-update' => true,
             ];
             $this->getApplication()->run(new ArrayInput($args), $output);
         }
