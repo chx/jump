@@ -22,15 +22,16 @@ class JumpCommand extends BaseCommand
     {
         $args = [
             'command' => 'show',
-            '--latest' => true,
-            '--major-only' => true,
+            '--outdated' => true,
             '--direct' => true,
             '--format' => 'json',
         ];
         $showOutput = new BufferedOutput();
         $this->getApplication()->doRun(new ArrayInput($args), $showOutput);
         $packages = [];
-        foreach (json_decode($showOutput->fetch(), true)['installed'] as $package) {
+        // There can be warnings before the actual output.
+        preg_match('/\{.*\}$/s', $showOutput->fetch(), $matches);
+        foreach (json_decode($matches[0], true)['installed'] as $package) {
             if ($package['latest-status'] === 'update-possible') {
                 $packages[] = $package['name'] . ':~' . $package['latest'];
             }
