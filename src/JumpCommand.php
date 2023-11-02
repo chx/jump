@@ -33,7 +33,8 @@ class JumpCommand extends BaseCommand
         preg_match('/\{.*\}$/s', $showOutput->fetch(), $matches);
         foreach (json_decode($matches[0], true)['installed'] as $package) {
             if ($package['latest-status'] === 'update-possible') {
-                $packages[] = $package['name'] . ':~' . $package['latest'];
+              $version = preg_replace('/(\d+\.\d+)\.\d+$/', '\1', $package['latest']);
+              $packages[] = $package['name'] . ':~' . $version;
             }
         }
         if ($packages) {
